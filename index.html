@@ -1,0 +1,334 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>MinaMae</title>
+  <!-- FontAwesome for icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    }
+
+    body {
+      background-color: #0f0a0a;
+      color: #ffffff;
+      min-height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 20px 0;
+    }
+
+    .container {
+      width: 100%;
+      max-width: 450px;
+      min-height: 90vh;
+      background: linear-gradient(180deg, rgba(20, 10, 10, 0.4) 0%, #1a0808 100%),
+                  url('https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=800&q=80') center/cover no-repeat;
+      border-radius: 24px;
+      position: relative;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: flex-end;
+      padding: 30px 20px;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.8);
+    }
+
+    /* Gradient overlay to make text visible */
+    .overlay {
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: linear-gradient(180deg, rgba(0, 0, 0, 0.1) 0%, rgba(20, 5, 5, 0.85) 60%, rgba(20, 5, 5, 0.98) 100%);
+      z-index: 1;
+    }
+
+    .content {
+      position: relative;
+      z-index: 2;
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+    }
+
+    /* Profile Info */
+    .profile-title {
+      font-size: 28px;
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      margin-bottom: 4px;
+    }
+
+    .verified-badge {
+      color: #3897f0;
+      font-size: 20px;
+    }
+
+    .status-badge {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      color: #00ff66;
+      font-weight: 600;
+      font-size: 14px;
+      margin-bottom: 16px;
+    }
+
+    .status-dot {
+      width: 8px;
+      height: 8px;
+      background-color: #00ff66;
+      border-radius: 50%;
+      box-shadow: 0 0 8px #00ff66;
+    }
+
+    /* Social Icons Header */
+    .social-icons-row {
+      display: flex;
+      gap: 15px;
+      margin-bottom: 20px;
+    }
+
+    .social-btn {
+      width: 48px;
+      height: 48px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-decoration: none;
+      color: #fff;
+      font-size: 22px;
+      transition: transform 0.2s;
+    }
+
+    .social-btn:hover {
+      transform: scale(1.1);
+    }
+
+    .telegram-btn {
+      background: #0088cc;
+    }
+
+    .instagram-btn {
+      background: radial-gradient(circle at 30% 107%, #fdf497 0%, #fdf497 5%, #fd5949 45%,#d6249f 60%,#285AEB 90%);
+    }
+
+    /* Countdown Timer */
+    .free-tag {
+      background-color: #00e600;
+      color: #000;
+      font-weight: 800;
+      font-size: 11px;
+      padding: 3px 10px;
+      border-radius: 4px;
+      letter-spacing: 1px;
+      margin-bottom: 10px;
+    }
+
+    .timer-container {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 25px;
+    }
+
+    .timer-box {
+      background-color: rgba(40, 20, 20, 0.7);
+      border: 1px solid rgba(0, 255, 100, 0.3);
+      padding: 6px 14px;
+      border-radius: 10px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      min-width: 55px;
+    }
+
+    .timer-num {
+      color: #00ff66;
+      font-size: 22px;
+      font-weight: bold;
+    }
+
+    .timer-label {
+      color: #00ff66;
+      font-size: 9px;
+      font-weight: bold;
+      letter-spacing: 0.5px;
+    }
+
+    .timer-colon {
+      color: #00ff66;
+      font-size: 22px;
+      font-weight: bold;
+    }
+
+    /* Featured Banner Link */
+    .banner-link {
+      width: 100%;
+      height: 220px;
+      border-radius: 20px;
+      overflow: hidden;
+      position: relative;
+      display: flex;
+      align-items: flex-end;
+      justify-content: center;
+      padding-bottom: 20px;
+      text-decoration: none;
+      box-shadow: 0 0 20px rgba(0, 150, 255, 0.4);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      transition: transform 0.2s, box-shadow 0.2s;
+    }
+
+    .banner-link:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 0 25px rgba(0, 150, 255, 0.7);
+    }
+
+    .banner-bg {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: url('https://images.unsplash.com/photo-1524504388940-b1c1722653e1?auto=format&fit=crop&w=800&q=80') center/cover no-repeat;
+    }
+
+    .banner-icon {
+      position: absolute;
+      top: 15px;
+      left: 15px;
+      background: #0088cc;
+      color: white;
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 16px;
+    }
+
+    .banner-text {
+      position: relative;
+      z-index: 2;
+      color: white;
+      font-size: 20px;
+      font-weight: bold;
+      text-shadow: 0 2px 4px rgba(0,0,0,0.8);
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    /* Footer Links */
+    .footer-links {
+      margin-top: 30px;
+      font-size: 12px;
+      color: #00ff66;
+      display: flex;
+      gap: 10px;
+    }
+
+    .footer-links a {
+      color: #00ff66;
+      text-decoration: none;
+    }
+
+    .footer-links a:hover {
+      text-decoration: underline;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="container">
+    <div class="overlay"></div>
+
+    <div class="content">
+      <!-- Profile Header -->
+      <div class="profile-title">
+        MinaMae <i class="fa-solid fa-circle-check verified-badge"></i>
+      </div>
+      
+      <div class="status-badge">
+        <span class="status-dot"></span> Active now
+      </div>
+
+      <!-- Main Social Links (Change href to your link) -->
+      <div class="social-icons-row">
+        <a href="https://t.me/yourusername" target="_blank" class="social-btn telegram-btn">
+          <i class="fa-brands fa-telegram"></i>
+        </a>
+        <a href="https://instagram.com/yourusername" target="_blank" class="social-btn instagram-btn">
+          <i class="fa-brands fa-instagram"></i>
+        </a>
+      </div>
+
+      <!-- Timer Section -->
+      <div class="free-tag">FREE</div>
+      <div class="timer-container">
+        <div class="timer-box">
+          <span class="timer-num" id="minutes">24</span>
+          <span class="timer-label">MIN</span>
+        </div>
+        <span class="timer-colon">:</span>
+        <div class="timer-box">
+          <span class="timer-num" id="seconds">23</span>
+          <span class="timer-label">SEC</span>
+        </div>
+      </div>
+
+      <!-- Main Clickable Card / Social Banner (Change href to your link) -->
+      <a href="https://onlyfans.com/yourusername" target="_blank" class="banner-link">
+        <div class="banner-bg"></div>
+        <div class="banner-icon">
+          <i class="fa-solid fa-key"></i>
+        </div>
+        <div class="banner-text">
+          more OF me ❤️🔥
+        </div>
+      </a>
+
+      <!-- Footer -->
+      <div class="footer-links">
+        <a href="#">Privacy Policy</a> | 
+        <a href="#">Terms</a> | 
+        <a href="#">Report</a>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // Countdown Timer Script
+    let timeInSeconds = 24 * 60 + 23; // 24 mins 23 secs
+
+    const minElement = document.getElementById('minutes');
+    const secElement = document.getElementById('seconds');
+
+    setInterval(() => {
+      if (timeInSeconds > 0) {
+        timeInSeconds--;
+        const mins = Math.floor(timeInSeconds / 60);
+        const secs = timeInSeconds % 60;
+
+        minElement.textContent = String(mins).padStart(2, '0');
+        secElement.textContent = String(secs).padStart(2, '0');
+      }
+    }, 1000);
+  </script>
+</body>
+</html>
